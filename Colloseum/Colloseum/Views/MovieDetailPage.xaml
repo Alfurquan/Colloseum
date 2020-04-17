@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:cells="clr-namespace:Colloseum.Cells"
+             mc:Ignorable="d"
+             Title="{Binding SelectedMovie.Title}"
+             x:Class="Colloseum.Views.MovieDetailPage">
+
+    <ScrollView>
+    <StackLayout>
+        <StackLayout HeightRequest="400" BackgroundColor="Aqua">
+            <AbsoluteLayout HeightRequest="400">
+                <ffimageloading:CachedImage
+                    AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All"
+                    LoadingPlaceholder="placeholder_landscape.png" 
+                    Source="{Binding SelectedMovie.PosterPath, StringFormat='http://image.tmdb.org/t/p/w300/{0}'}" 
+                    Aspect="Fill" />
+                    <BoxView
+                    AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All"
+                    BackgroundColor="Black" Opacity="0.6" />
+                    <StackLayout 
+                        AbsoluteLayout.LayoutBounds="1,1,1,0.5" 
+                        AbsoluteLayout.LayoutFlags="All" 
+                        Padding="10">
+                        <StackLayout VerticalOptions="CenterAndExpand">
+                        <Label 
+                            Text="{Binding SelectedMovie.Title}" 
+                            FontSize="20"
+                            FontAttributes="Bold"  
+                            TextColor="White"/>
+                        <Label
+                            IsVisible="{Binding SelectedMovie.HasTagline,Mode=OneWay}"
+                            Text="{Binding SelectedMovie.Tagline}"
+                            FontSize="18"
+                            TextColor="White"
+                        />
+                        <Label 
+                            Text="{Binding SelectedMovie.GenresNames}" 
+                            FontSize="16"
+                            TextColor="White"/>
+                        <StackLayout Orientation="Horizontal">
+                            <Image Source="calendar.png" HeightRequest="20" WidthRequest="20" VerticalOptions="Center" />
+                            <Label FontSize="13" TextColor="White" Text="{Binding SelectedMovie.ReleaseDate , StringFormat='{0:d MMM,yyyy}'}" VerticalOptions="Center" />
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal" Spacing="5">
+                            <Image Source="star_icon.png" HeightRequest="20" WidthRequest="20" VerticalOptions="Center"/>
+                            <Label Text="{Binding SelectedMovie.VoteAverage}" FontSize="13" FontAttributes="Bold" TextColor="White" VerticalOptions="Center" />
+                            <Image Source="documentry.png" HeightRequest="20" WidthRequest="20" VerticalOptions="Center" />
+                            <Label Text="{Binding SelectedMovie.Runtime ,StringFormat='{0} Minutes'}}" FontSize="13" FontAttributes="Bold" TextColor="white" VerticalOptions="Center" />
+                        </StackLayout>
+                    </StackLayout>
+                    </StackLayout>
+                </AbsoluteLayout>
+        </StackLayout>
+            <StackLayout Padding="10,15">
+                <ActivityIndicator 
+                         Color="{StaticResource AccentColor}"   
+                         VerticalOptions="Center" 
+                         HorizontalOptions="Center" 
+                         IsRunning="{Binding IsBusy}"
+                         IsVisible="{Binding IsBusy}" />
+                <Label Text="Overview"  FontSize="Medium" FontAttributes="Bold" TextColor="#757575"/>
+                <Label Text="{Binding SelectedMovie.Overview}" FontSize="Small" TextColor="#757575" />
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Top Billed Cast" FontSize="Medium" HorizontalOptions="Center" FontAttributes="Bold" TextColor="#757575" Padding="0,10"/>
+                    <Label Text="See All" FontSize="Medium" HorizontalOptions="EndAndExpand" VerticalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ShowFullCastCommand}"  />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </StackLayout>
+                <CollectionView ItemsSource="{Binding TopCasts}" HeightRequest="250">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal" ItemSpacing="5"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <cells:CastCell />
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                <Label Text="Media" FontSize="Large" FontAttributes="Bold" TextColor="#757575"/>
+                <Label Text="Images" FontSize="Medium" TextColor="#757575"/>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="{Binding MovieImage.Posters.Count,StringFormat='Posters({0})'}" FontSize="Medium" HorizontalOptions="Center" FontAttributes="Bold" TextColor="#757575" Padding="0,10"/>
+                    <Label Text="See All" FontSize="Medium" HorizontalOptions="EndAndExpand" VerticalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ShowPostersPageCommand}"  />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </StackLayout>
+                <CollectionView ItemsSource="{Binding MovieImage.Posters}" HeightRequest="180">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal" ItemSpacing="5" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <ffimageloading:CachedImage LoadingPlaceholder="placeholder_portrait.png" Source="{Binding FilePath,StringFormat='http://image.tmdb.org/t/p/w300/{0}'}" Aspect="AspectFill"/>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="{Binding MovieImage.Backdrops.Count,StringFormat='Backdrops({0})'}" FontSize="Medium" HorizontalOptions="Center" FontAttributes="Bold" TextColor="#757575" Padding="0,10" />
+                    <Label Text="See All" FontSize="Medium" HorizontalOptions="EndAndExpand" VerticalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ShowBackdropsPageCommand}"  />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </StackLayout>
+                <CollectionView ItemsSource="{Binding MovieImage.Backdrops}" HeightRequest="100">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal" ItemSpacing="5" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <ffimageloading:CachedImage LoadingPlaceholder="placeholder_landscape.png" Source="{Binding FilePath,StringFormat='http://image.tmdb.org/t/p/w300/{0}'}" Aspect="AspectFill"/>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="{Binding Videos.Count,StringFormat='Videos({0})'}" FontSize="Medium" HorizontalOptions="Center" FontAttributes="Bold" TextColor="#757575" Padding="0,10" />
+                </StackLayout>
+                <CollectionView ItemsSource="{Binding Videos}" 
+                                SelectionMode="Single" HeightRequest="180"
+                                SelectionChangedCommand="{Binding ShowVideoPageCommand}"
+                                SelectedItem="{Binding SelectedVideo, Mode=TwoWay}">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal" ItemSpacing="5"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <cells:VideoCell />
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                <StackLayout Orientation="Horizontal">
+                    <StackLayout>
+                        <Label Text="Status" FontSize="Medium" FontAttributes="Bold" TextColor="Black" />
+                        <Label Text="{Binding SelectedMovie.Status}" FontSize="Small" TextColor="#757575"/>
+                    </StackLayout>
+                    <StackLayout HorizontalOptions="CenterAndExpand">
+                        <Label Text="Budget" FontSize="Medium" FontAttributes="Bold" TextColor="Black" />
+                        <Label Text="{Binding SelectedMovie.Budget,StringFormat='${0}'}" FontSize="Small" TextColor="#757575"/>
+                    </StackLayout>
+                    <StackLayout>
+                        <Label Text="Revenue" FontSize="Medium" FontAttributes="Bold" TextColor="Black" />
+                        <Label Text="{Binding SelectedMovie.Revenue,StringFormat='${0}'}" FontSize="Small" TextColor="#757575"/>
+                    </StackLayout>
+                </StackLayout>
+            </StackLayout>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

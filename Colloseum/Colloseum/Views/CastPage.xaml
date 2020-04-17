@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             Padding="0,5"
+             xmlns:cells="clr-namespace:Colloseum.Cells"
+             Title="{Binding SelectedMovie.Title}"
+             x:Class="Colloseum.Views.CastPage">
+    <CollectionView ItemsSource="{Binding Casts}">
+        <CollectionView.Header>
+            <StackLayout Padding="0,10">
+                <Label
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"
+                   Text="Full Cast"
+                   FontSize="Medium"
+                   FontAttributes="Bold" />
+            </StackLayout>
+        </CollectionView.Header>
+        <CollectionView.ItemsLayout>
+            <GridItemsLayout Orientation="Vertical" Span="3" VerticalItemSpacing="10" HorizontalItemSpacing="5"/>
+        </CollectionView.ItemsLayout>
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <cells:CastCell />
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+</ContentPage>

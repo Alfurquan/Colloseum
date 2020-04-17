@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:ffimage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:controls="clr-namespace:PanCardView.Controls;assembly=PanCardView"
+             xmlns:proc="clr-namespace:PanCardView.Processors;assembly=PanCardView"
+             xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView"
+             Title="{Binding SelectedMovie.Title,StringFormat='{0}-Backdrops'}"
+             mc:Ignorable="d"
+             x:Class="Colloseum.Views.BackdropPage">
+    <StackLayout BackgroundColor="Black">
+        <StackLayout Padding="0,30" 
+            VerticalOptions="CenterAndExpand"
+            HorizontalOptions="Center">
+            <cards:CarouselView
+                ItemsSource="{Binding MovieImage.Backdrops}"
+                SlideShowDuration="3500">
+                <x:Arguments>
+                    <proc:BaseCarouselFrontViewProcessor ScaleFactor="0.5" OpacityFactor="0" RotationFactor="0.1" />
+                    <proc:BaseCarouselBackViewProcessor ScaleFactor="0.5" OpacityFactor="0" RotationFactor="0.1" />
+                </x:Arguments>
+
+                <cards:CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <ContentView>
+                            <Frame 
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center"
+                            HeightRequest="300"
+                            WidthRequest="300"
+                            Padding="0" 
+                            HasShadow="false"
+                            IsClippedToBounds="true"
+                            CornerRadius="10"
+                            BackgroundColor="{Binding Color}">
+                                <ffimage:CachedImage
+                                Source="{Binding FilePath, StringFormat='https://image.tmdb.org/t/p/original/{0}'}"
+                                LoadingPlaceholder="placeholder_landscape.png"
+                                Aspect="AspectFill"/>
+                            </Frame>
+                        </ContentView>
+                    </DataTemplate>
+                </cards:CarouselView.ItemTemplate>
+                <controls:IndicatorsControl ToFadeDuration="1500"/>
+                <controls:LeftArrowControl ToFadeDuration="2500"/>
+                <controls:RightArrowControl ToFadeDuration="2500"/>
+            </cards:CarouselView>
+        </StackLayout>
+    </StackLayout>
+</ContentPage>

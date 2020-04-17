@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:control="clr-namespace:Colloseum.Controls"
+             x:Class="Colloseum.Cells.MovieCell">
+    <control:CardView BorderColor="LightGray" Margin="10,5" Padding="0" HasShadow="False">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <ffimageloading:CachedImage LoadingPlaceholder="placeholder_portrait.png" Aspect="AspectFill" Source="{Binding PosterPath, StringFormat='https://image.tmdb.org/t/p/w154/{0}'}" />
+            <StackLayout Padding="10,20" Grid.Column="1">
+                <Label FontSize="20" TextColor="Black" Text="{Binding Title}" />
+                <Label FontSize="13" TextColor="#757575" Text="{Binding GenresNames}" LineBreakMode="WordWrap"/>
+                <StackLayout Orientation="Horizontal">
+                    <Image Source="calendar.png" HeightRequest="20" WidthRequest="20" VerticalOptions="Center" />
+                    <Label FontSize="13" TextColor="#757575" Text="{Binding ReleaseDate , StringFormat='{0:d MMM,yyyy}'}" VerticalOptions="Center" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Image Source="star_icon.png" HeightRequest="20" WidthRequest="20" VerticalOptions="Center"/>
+                    <Label Text="{Binding VoteAverage}" FontSize="13" FontAttributes="Bold" TextColor="Black" VerticalOptions="Center" />
+                </StackLayout>
+            </StackLayout>
+        </Grid>
+    </control:CardView>
+</ContentView>

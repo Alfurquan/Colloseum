@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:local="clr-namespace:Colloseum.Views"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             NavigationPage.HasNavigationBar="False"
+             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+             android:TabbedPage.BarSelectedItemColor="#01b4e4"
+             android:TabbedPage.BarItemColor="Gray"
+             android:TabbedPage.ToolbarPlacement="Bottom"
+             x:Class="Colloseum.Views.HomePage">
+
+    <NavigationPage  Title="Now Playing" Icon="nowplaying_movies.png">
+        <x:Arguments>
+            <local:NowPlayingMoviesPage Title="Now Playing"  />
+        </x:Arguments>
+    </NavigationPage>
+    <NavigationPage Title="Upcoming" Icon="upcoming_movies.png">
+        <x:Arguments>
+            <local:UpcomingMoviesPage Title="Upcoming" />
+        </x:Arguments>
+    </NavigationPage>
+    <NavigationPage Title="Popular" Icon="latest_movies.png">
+        <x:Arguments>
+            <local:PopularMoviesPage Title="Popular" />
+        </x:Arguments>
+    </NavigationPage>
+
+</TabbedPage>

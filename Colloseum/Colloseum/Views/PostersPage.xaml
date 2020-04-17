@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:proc="clr-namespace:PanCardView.Processors;assembly=PanCardView"
+             xmlns:card="clr-namespace:PanCardView;assembly=PanCardView" xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             Title="{Binding SelectedMovie.Title,StringFormat='{0}-Posters'}"
+             x:Class="Colloseum.Views.PostersPage">
+
+    <StackLayout BackgroundColor="Black">
+        <card:CoverFlowView 
+                    PositionShiftValue="145"
+                    IsCyclical="False"
+                    VerticalOptions="Start"        
+                    ItemsSource="{Binding MovieImage.Posters}">
+            <x:Arguments>
+                <proc:BaseCoverFlowFrontViewProcessor ScaleFactor="0.75" OpacityFactor="0.25" />
+                <proc:BaseCoverFlowBackViewProcessor  ScaleFactor="0.75" OpacityFactor="0.25" />
+            </x:Arguments>
+            <card:CoverFlowView.ItemTemplate>
+                <DataTemplate>
+                    <Frame 
+                         Margin="80"
+                         VerticalOptions="Center"
+                         HorizontalOptions="Fill"
+                         Padding="0" 
+                         HasShadow="false"
+                         IsClippedToBounds="true"
+                         CornerRadius="10">
+                        <ffimageloading:CachedImage
+                                Source="{Binding FilePath, StringFormat='https://image.tmdb.org/t/p/original/{0}'}"
+                                LoadingPlaceholder="placeholder_portrait.png"
+                                Aspect="AspectFill"/>
+                    </Frame>
+                </DataTemplate>
+            </card:CoverFlowView.ItemTemplate>
+        </card:CoverFlowView>
+    </StackLayout>
+</ContentPage>
